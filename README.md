@@ -4,13 +4,11 @@
 ### Data Preparation
 Similar to [AlphaGen](https://github.com/RL-MLDM/alphagen), We Use [Qlib](https://github.com/microsoft/qlib#data-preparation) as data save tool and download data from free & open-source data source  [baostock](http://baostock.com/baostock/index.php/%E9%A6%96%E9%A1%B5).
 
-Firstly, you should install Qlib by
-pip install pyqlib
+Please install Qlib [Qlib](https://github.com/microsoft/qlib) first
 
 Then download stock data through running `data_collection/fetch_baostock_data.py`
 
-Third step,
-Modify the correspoding `/path/for/qlib_data` in `gan.utils.data.py` to the data you downloaded (the dafault setting is `~/.qlib/qlib_data/cn_data_rolling`)
+The next, Modify the correspoding `/path/for/qlib_data` in `gan.utils.data.py` to the data you downloaded (the dafault setting is `~/.qlib/qlib_data/cn_data_rolling`)
 
 
 ### Run Our Model
@@ -36,7 +34,14 @@ Here `instruments,train_end_year,seeds,save_name`,` must be the same as it in st
 
 #### stage3: Show the results
 
-You could run the ipython notebook file `exp_AFF_calc_result.ipynb`   to generate and concat experiment result. 
+You could run the ipython notebook file 
+
+```shell
+exp_AFF_calc_result.ipynb
+```
+
+to generate and concat experiment result. 
+
 
 ### Run baseline experiments
 

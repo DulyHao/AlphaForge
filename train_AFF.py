@@ -1,3 +1,8 @@
+# Part of the of this repository refers to the following code:
+# Shuo Yu et.al (2023).https://github.com/RL-MLDM/alphagen/tree/master
+# Petersen et.al (2023)[https://github.com/dso-org/deep-symbolic-optimization]
+# Microsoft (2024) [https://github.com/microsoft/qlib/tree/main/qlib]
+
 import torch 
 import os
 from gan.dataset import Collector
