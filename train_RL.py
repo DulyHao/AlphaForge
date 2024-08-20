@@ -205,7 +205,7 @@ if __name__ == '__main__':
     train_end = 2020
     for capacity in [1,10,20,50,100]:
         for seed in range(5):
-            for instruments in ["csi300_my"]:
+            for instruments in ["csi300"]:
                 main(
                     seed=seed, instruments=instruments, pool_capacity=capacity, 
                     steps=steps[capacity], raw = True,
