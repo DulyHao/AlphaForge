@@ -143,13 +143,13 @@ def get_metric(zoo_blds,device,corr_thresh=0.5,metric_target='ic'):
 
 
 def main(
-        instruments: str = "csi500_my",
+        instruments: str = "csi500",
         train_end_year:int = 2020,
         freq:str = 'day',
         seeds:str = '[0]',
         cuda:int = 0,
         save_name:str = 'test',
-        n_factors:int = 100,
+        zoo_size:int = 100,
         corr_thresh:float = 0.7,
         ic_thresh:float = 0.03,
         icir_thresh:float = 0.1,
@@ -177,7 +177,7 @@ def main(
             n_layers = 2
             d_model = 128
             dropout = 0.2
-            num_factors = n_factors
+            num_factors = zoo_size
 
             # generator configuaration
             num_epochs_g = 2

@@ -120,7 +120,6 @@ def main(
     pool_capacity: int = 10,
     steps: int = 200_000,
     raw: bool = False,
-    qlib_path: str = '',
     train_end: int = 2019,
     freq: str = 'day',
 ):
@@ -195,7 +194,6 @@ def main(
     )
 
     
-QLIB_PATH = '/path/for/qlib_data'
 from gan.utils.qlib import get_data_my
 if __name__ == '__main__':
     steps = {
@@ -210,7 +208,7 @@ if __name__ == '__main__':
             for instruments in ["csi300_my"]:
                 main(
                     seed=seed, instruments=instruments, pool_capacity=capacity, 
-                    steps=steps[capacity], raw = True, qlib_path = QLIB_PATH,
+                    steps=steps[capacity], raw = True,
                     train_end=train_end,
                     )
 
