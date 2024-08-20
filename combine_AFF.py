@@ -119,6 +119,8 @@ def main(
 
     os.environ["CUDA_VISIBLE_DEVICES"]=str(cuda)
     train_end = train_end_year
+
+    # read data
     returned = get_data_by_year(
         train_start = 2010,train_end=train_end,valid_year=train_end+1,test_year =train_end+2,
         instruments=instruments, target=target,freq=freq,
@@ -133,7 +135,7 @@ def main(
         tensor_save_path = f"out/{save_name}_{instruments}_{train_end}_{seed}/"
         name = f"{train_end}_{n_factors}_{window}_{seed}"
         zoo = load_pickle(path)
-
+        
         df = get_blds_list_df([zoo]).sort_values('score',ascending=False,key=lambda x:abs(x))
         from gan.utils.builder import exprs2tensor
         fct_tensor = exprs2tensor(df['exprs'],data_all,normalize=True)

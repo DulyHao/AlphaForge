@@ -249,6 +249,7 @@ def main(
         z = z.to(cfg.device)
         random_call(z)
 
+        # initialize the zoo
         zoo_blds = Builders(0,max_len=cfg.max_len,n_actions=SIZE_ACTION)
         metric = get_metric(zoo_blds,device=cfg.device,corr_thresh=cfg.f_corr_thresh)
         empty_metric = get_metric(
@@ -263,35 +264,50 @@ def main(
                                 randomly = False,
                                 random_method = random_call,max_iter = 200)
 
+
+        # train and mine untill the zoo is full
         t = 0
         while len(zoo_blds)<cfg.num_factors:
             if not zoo_blds.examined:
                 print(' zoo_blds not examined')
                 zoo_blds.evaluate(data,target,empty_metric,verbose=True)
+
+            ### update the metric for the current zoo
             metric = get_metric(zoo_blds,device = cfg.device,corr_thresh=cfg.f_corr_thresh)
 
+            ### Prepare data to train predictor
             coll.blds.evaluate(data,target,metric,verbose=True)
             if coll.blds_bak.batch_size>cfg.data_keep_p:
+                # sample the training data of predictor to keep the size
                 print(f'sample datas to keep {coll.blds_bak.batch_size}to{cfg.data_keep_p}')
                 indices = np.random.choice(np.arange(coll.blds_bak.batch_size),cfg.data_keep_p,replace=False)
                 coll.blds_bak = coll.blds_bak.filter_by_index(indices)
             coll.blds_bak.evaluate(data,target,metric,verbose=True)
 
+
+
             if coll.blds_bak.batch_size > 0:
+                # give the current builders more weights in training p
                 blds_list = [coll.blds_bak,coll.blds]
                 weight_list = [1.,2.]
             else:
                 blds_list = [coll.blds]
                 weight_list = [1.]
+
             x, y, weights = blds_list_to_tensor(blds_list,weight_list)
             y = pre_process_y(y)
 
+
+            ### train predictor
             netP.initialize_parameters() 
             train_net_p_with_weight(cfg,netP,x,y,weights,lr=cfg.p_lr)
 
+            ### train generator
             netG.initialize_parameters()
             blds_in_train = train_network_generator(netG, netM, netP, cfg, data, target,t,random_method = random_call,
                                     metric=metric,lr=cfg.g_lr,n_actions=SIZE_ACTION)
+            
+            ### Generate new alpha factors from current Generator
             coll.reset(data,target,metric)
             coll.collect_target_num(netG,netM,z,data,target,metric,
                                     target_num=1000,reset_net=False,drop_invalid=False,
@@ -305,7 +321,8 @@ def main(
             lengh_s['all_new']=len(coll.blds)
 
             print(f"{lengh_s['train']} (train) + {lengh_s['new']} (new)  =  {lengh_s['all_new']} (all_new)")
-
+            
+            ### get the valid alpha factors during the training process and the generating process
             new_zoo = filter_valid_blds(
                 coll.blds,
                 corr_thresh=cfg.f_add_thresh,
@@ -329,9 +346,10 @@ def main(
                     device = cfg.device,
                     verbose = False,
                     )
+            # save the zoo
             save_blds(zoo_blds,f"out/{cfg.name}",'zoo_final')
 
-
+            # Randomly generate some alpha factors in order to promote exploration and to avoid local minimum
             coll.collect_target_num(netG,netM,z,data,target,metric,
                                     target_num=1000,reset_net=False,drop_invalid=False,
                                     randomly = True,
