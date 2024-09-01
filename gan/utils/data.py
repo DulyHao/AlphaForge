@@ -9,7 +9,7 @@ def get_data_by_year(
     instruments=None, target=None,freq=None,
                     ):
     QLIB_PATH = {
-        'day':'/path/for/qlib_data',
+        'day':'path/for/qlib',
     }
     
     from gan.utils import load_pickle,save_pickle
@@ -26,7 +26,7 @@ def get_data_by_year(
     test_start,test_end = test_dates
     test_head_start = f"{test_year-2}-01-01"
 
-    name = instruments + '_1227_' + str(target).replace('/','_').replace(' ','') + '_' + freq
+    name = instruments + '_pkl_' + str(target).replace('/','_').replace(' ','') + '_' + freq
     name = f"{name}_{train_start}_{train_end}_{valid_start}_{valid_end}_{test_start}_{test_end}"
     try:
 

@@ -1,0 +1,11 @@
+baostock==00.8.90
+gym==0.21.0
+matplotlib==3.7.1
+numpy==1.24.3
+pandas==1.5.3
+qlib==0.9.0
+sb3_contrib==1.8.0
+stable_baselines3==1.8.0
+torch==1.13.0
+shimmy==1.1.0
+fire

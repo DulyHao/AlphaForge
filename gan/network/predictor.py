@@ -6,28 +6,10 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import copy
 
-# # Define your neural network architecture for regression
-# class NetP(nn.Module):
-#     def __init__(self):
-#         super(NetP, self).__init__()
-#         # Define your layers here
-#         self.fc1 = nn.Linear(20 * 49, 64)
-#         self.fc2 = nn.Linear(64, 32)
-#         self.fc3 = nn.Linear(32, 1)  # Regression task has one output
-
-#     def forward(self, x):
-#         # Define the forward pass
-#         x = x.view(x.size(0), -1)  # Flatten the input
-#         x = torch.relu(self.fc1(x))
-#         x = torch.relu(self.fc2(x))
-#         x = self.fc3(x)
-#         return x
-
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
 
-# Define your neural network architecture for regression
 class NetP(nn.Module):
     def __init__(
         self,
@@ -210,7 +192,6 @@ def train_regression_model(
 
 
 
-# 重写上面的函数 要求针对不同样本 有权重
 def train_regression_model_with_weight(
     train_loader,
     valid_loader,

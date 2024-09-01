@@ -39,7 +39,7 @@ def main(
         returned = get_data_by_year(
             train_start = 2010,train_end=train_end,valid_year=train_end+1,test_year =train_end+2,
             instruments=instruments, target=target,freq='day',)
-        data,data_valid,data_valid_withhead,data_test,data_test_withhead,_ = returned
+        data_all, data,data_valid,data_valid_withhead,data_test,data_test_withhead,_ = returned
 
         cache = {}
         device = torch.device('cuda:0')

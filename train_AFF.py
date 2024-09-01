@@ -102,7 +102,7 @@ def get_metric(zoo_blds,device,corr_thresh=0.5,metric_target='ic'):
         print(f"existed n_blds == {n_blds}")
     else:
         print("n_blds == 0")
-
+    
     def get_score(fct,tgt):
         metric_target = 'ic'
         ret = batch_ret(fct,tgt)
@@ -168,7 +168,7 @@ def main(
         train_start = 2010,train_end=train_end,valid_year=train_end+1,test_year =train_end+2,
         instruments=instruments, target=target,freq=freq,
     )
-    data,data_valid,data_valid_withhead,data_test,data_test_withhead,_ = returned
+    data_all,data,data_valid,data_valid_withhead,data_test,data_test_withhead,_ = returned
 
     for seed in seeds:
         reseed_everything(seed)
