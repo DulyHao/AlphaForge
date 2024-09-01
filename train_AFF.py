@@ -185,7 +185,7 @@ def main(
             num_factors = zoo_size
 
             # generator configuaration
-            num_epochs_g = 2
+            num_epochs_g = 200
             g_es_score = 'max' # max mean std combined
             g_es = 10
             g_hidden = 128
