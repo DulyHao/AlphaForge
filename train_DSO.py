@@ -67,8 +67,6 @@ def main(
                     ret = self.pool.try_new_expr(expr)
                 except OutOfDataRangeError:
                     ret = -1.
-                else:
-                    ret = -1.
                 finally:
                     self.cnt += 1
                     if self.cnt % 100 == 0:
